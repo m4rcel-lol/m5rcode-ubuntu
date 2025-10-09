@@ -4,8 +4,8 @@ from utils.downloader import download_and_extract
 from pathlib import Path
 
 # URLs for raw version and zipped repo
-VERSION_URL = "https://raw.githubusercontent.com/m4rcel-lol/m5rcode/main/version.txt"
-REPO_ZIP_URL = "https://github.com/m4rcel-lol/m5rcode/archive/refs/heads/main.zip"
+VERSION_URL = "https://raw.githubusercontent.com/m4rcel-lol/m5rcode-ubuntu/main/version.txt"
+REPO_ZIP_URL = "https://github.com/m4rcel-lol/m5rcode-ubuntu/archive/refs/heads/main.zip"
 
 def check_and_update():
     # Figure out where your version file is
