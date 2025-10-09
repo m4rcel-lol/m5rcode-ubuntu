@@ -1,7 +1,8 @@
-# m5rcode – The Unofficial Polyglot Programming Language
+# m5rcode-Ubuntu – A Ubuntu Port of [m5rcode](https://github.com/m4rcel-lol/m5rcode)
 
 ![Polyglot](https://img.shields.io/badge/language-Python%2FJS%2FPHP%2FC%23%2FC++-purple.svg)
 ![Status](https://img.shields.io/badge/status-experimental-orange.svg)
+## 🤔 What even is m5rcode?
 
 **m5rcode** is an experimental **polyglot programming language** written with a blend of **Python, JavaScript, PHP, C#, and C++**.  
 It uses obfuscation and cross-language embedding to allow developers to write multi-language scripts in a single file (`.m5r`).  
@@ -40,7 +41,7 @@ The project includes a custom **REPL shell** (`m5rshell`) and an **interpreter**
 Clone this repository:
 
 ```bash
-git clone https://github.com/m4rcel-lol/m5rcode.git
+git clone https://github.com/m4rcel-lol/m5rcode-ubuntu.git
 cd m5rcode
 ```
 
@@ -182,4 +183,4 @@ If you want to add support for more languages, open an issue or PR.
 
 ## 📜 Where can I install m5rcode from?
 
-You can install m5rcode from it's official website **pythonjs.cfd** hover over and copy paste to your browser.
+You can install m5rcode from this repo or the Windows repo found on the top of this readme.
