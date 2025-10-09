@@ -31,7 +31,7 @@ def check_and_update():
         with tempfile.TemporaryDirectory() as tmpdir:
             download_and_extract(REPO_ZIP_URL, tmpdir)
             # Find the extracted subfolder (GitHub zips always contain one top-level folder)
-            zipped_root = Path(tmpdir) / "m5rcode-main"
+            zipped_root = Path(tmpdir) / "m5rcode-ubuntu-main"
             if not zipped_root.exists():
                 zipped_root = next(Path(tmpdir).iterdir())
             # 3. Copy updated files over (here simply overwrite existing files)
