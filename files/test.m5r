@@ -1,0 +1,111 @@
+<?py
+# M5RCode Python Block: OBFUSCATED - True 3D Floating Cube & Hello World
+
+import tkinter as _tk
+import math as _m
+
+_WW=700
+_WH=400
+
+class _3D:
+    def __init__(self):
+        self._rt=_tk.Tk()
+        self._rt.title(''.join([chr(c) for c in [84,104,114,101,101,68,32,84,101,115,116]])) # ThreeD Test
+        self._cv=_tk.Canvas(self._rt,width=_WW,height=_WH,bg='#181c22',highlightthickness=0)
+        self._cv.pack()
+        self._A=0.0
+        self._B=0.0
+        self._t=0.0
+        self._run()
+        self._rt.mainloop()
+
+    def _pr(self, x,y,z):
+        # Perspective projection
+        d = 400
+        zz = z+220
+        return (
+            _WW//2 + int(d * x / (zz+1)),
+            _WH//2 + int(d * y / (zz+1))
+        )
+
+    def _run(self):
+        self._cv.delete('all')
+        # "3D" hello
+        _s = ''.join([chr(c) for c in [72,101,108,108,111,32,119,111,114,108,100]])
+        for _i in range(17,0,-3):
+            self._cv.create_text(_WW//2+_i,_WH//4+_i,fill=f"#3e238{9-_i//3}",font=('Consolas',62,'bold'),text=_s)
+        self._cv.create_text(_WW//2,_WH//4,fill="#ffe257",font=('Consolas',62,'bold'),text=_s)
+
+        # Draw ground
+        self._cv.create_oval(_WW//2-180,_WH//2+112,_WW//2+185,_WH//2+145,fill="#5800aa",outline="#380075")
+        
+        # Cube vertices (3D)
+        _sz=75
+        _F=_m.sin(self._t)*45
+        _verts=[ # 8 points of a cube
+            [-1,-1,-1], [1,-1,-1], [1,1,-1], [-1,1,-1],
+            [-1,-1,1],  [1,-1,1],  [1,1,1],  [-1,1,1]
+        ]
+        # 3D rotation and translation
+        _P=[]
+        for v in _verts:
+            x,y,z=v
+            # rotate around Y (self._A), X(self._B)
+            x2=x*_m.cos(self._A)-z*_m.sin(self._A)
+            z2=x*_m.sin(self._A)+z*_m.cos(self._A)
+            y2=y*_m.cos(self._B)-z2*_m.sin(self._B)
+            z3=y*_m.sin(self._B)+z2*_m.cos(self._B)
+            _P.append(self._pr(x2*_sz, y2*_sz+_F, z3*_sz+110))
+        # Cube edges
+        _edges=[(0,1),(1,2),(2,3),(3,0),(4,5),(5,6),(6,7),(7,4),
+                (0,4),(1,5),(2,6),(3,7)]
+        # Draw cube faces (as filled polygons for 3D solid look)
+        _faces=[(0,1,2,3),(4,5,6,7),(0,1,5,4),(2,3,7,6),(0,3,7,4),(1,2,6,5)]
+        _colf=["#66ffee","#f2a2fa","#00eedc","#39dabf","#bfeaff","#ccfcfc"]
+        for ii,f in enumerate(_faces):
+            pts=[_P[i] for i in f]
+            self._cv.create_polygon(pts,fill=_colf[ii],outline="#3c3c57",width=2,stipple='gray25')        
+        # Draw all edges (to make it look "wireframe-3d")
+        for a,b in _edges:
+            self._cv.create_line(*_P[a],*_P[b],fill="#231f39",width=3)
+            self._cv.create_line(*_P[a],*_P[b],fill="#aff",width=1)
+        # Animate
+        self._A+=0.09
+        self._B+=0.055
+        self._t+=0.07
+        self._rt.after(24,self._run)
+
+_3D()
+?>
+<?js
+(function(){
+    var x=[72,101,108,108,111,32,119,111,114,108,100];
+    var s='';
+    for(var i of x){ s+=String.fromCharCode(i); }
+    console.log(s);
+})();
+?>
+<?php
+${a}=array(72,101,108,108,111,32,119,111,114,108,100);
+echo implode(array_map('chr',${a})) . "\n";
+?>
+<?cs
+using System;
+class S{
+ static void Main(){
+  Console.WriteLine(string.Join("", new int[] {72,101,108,108,111,32,119,111,114,108,100}.Select(c => (char)c)));
+ }
+}
+?>
+<?cpp
+#include <iostream>
+int main() {
+ int arr[] = {72,101,108,108,111,32,119,111,114,108,100};
+ for(int i = 0; i < 11; i++) std::cout << (char)arr[i];
+ std::cout << std::endl;
+ return 0;
+}
+?>
+<?css
+body { color: #ffe257; background: #181c22; }
+?>

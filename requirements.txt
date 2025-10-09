@@ -1,0 +1,8 @@
+rich
+requests
+colorama
+pypresence
+discord
+psutil
+pyfiglet
+beautifulsoup4

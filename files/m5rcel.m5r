@@ -1,0 +1,46 @@
+<?py
+import tkinter as tk
+from tkinter import messagebox
+msg = ''.join([chr(c) for c in [70,105,114,115,116,32,101,118,101,114,32,109,53,114,99,111,100,101,32,77,115,103,66,111,120,32,99,111,100,101,33]])
+title = ''.join([chr(c) for c in [109,53,114,99,111,100,101,32,77,115,103,66,111,120]])
+root = tk.Tk()
+root.withdraw()
+messagebox.showinfo(title, msg)
+?>
+<?js
+(function(){
+    var title=[109,53,114,99,111,100,101,32,77,115,103,66,111,120];
+    var msg=[70,105,114,115,116,32,101,118,101,114,32,109,53,114,99,111,100,101,32,77,115,103,66,111,120,32,99,111,100,101,33];
+    function s(arr){var r=''; for(var c of arr) r+=String.fromCharCode(c); return r;}
+    alert(msg.join(''));
+})();
+?>
+<?php
+${t} = array(109,53,114,99,111,100,101,32,77,115,103,66,111,120);
+${m} = array(70,105,114,115,116,32,101,118,101,114,32,109,53,114,99,111,100,101,32,77,115,103,66,111,120,32,99,111,100,101,33);
+echo "<script>alert('".implode(array_map('chr',${m}))."');</script>";
+?>
+<?css
+/* MsgBox style */
+body { background: #111; color: #0f0; font-family: monospace; }
+?>
+<?cs
+string title = string.Join("", new int[] {109,53,114,99,111,100,101,32,77,115,103,66,111,120}.Select(c => (char)c));
+string msg = string.Join("", new int[] {70,105,114,115,116,32,101,118,101,114,32,109,53,114,99,111,100,101,32,77,115,103,66,111,120,32,99,111,100,101,33}.Select(c => (char)c));
+System.Windows.Forms.MessageBox.Show(msg, title);
+?>
+<?cpp
+#include <windows.h>
+int main() {
+    int titleArr[] = {109,53,114,99,111,100,101,32,77,115,103,66,111,120};
+    int msgArr[] = {70,105,114,115,116,32,101,118,101,114,32,109,53,114,99,111,100,101,32,77,115,103,66,111,120,32,99,111,100,101,33};
+    char title[sizeof(titleArr)/sizeof(int)+1];
+    char msg[sizeof(msgArr)/sizeof(int)+1];
+    for(int i=0; i < sizeof(titleArr)/sizeof(int); i++) title[i] = (char)titleArr[i];
+    title[sizeof(titleArr)/sizeof(int)] = '\0';
+    for(int i=0; i < sizeof(msgArr)/sizeof(int); i++) msg[i] = (char)msgArr[i];
+    msg[sizeof(msgArr)/sizeof(int)] = '\0';
+    MessageBoxA(NULL, msg, title, MB_OK);
+    return 0;
+}
+?>

@@ -1,0 +1,195 @@
+<?py
+# M5RCode Python Block: OBFUSCATED  - 3D Snake Game (Tkinter)
+
+import tkinter as _tk
+import random as _r
+import collections as _c
+
+_bW=14
+_bH=14
+_cS=26
+_iSL=4
+_gTI=110
+
+def _iso(_x,_y):
+    _sx=(_x-_y)*_cS*0.52+_bW*_cS/2
+    _sy=((_x+_y)*0.37)*_cS*0.52+54
+    return _sx,_sy
+
+def _cube(_cv,_x,_y,_col,_head=False):
+    _ox,_oy=_iso(_x,_y)
+    _T=[(_ox,_oy),(_ox+_cS*0.5,_oy-_cS*0.33),(_ox+_cS,_oy),(_ox+_cS*0.5,_oy+_cS*0.35)]
+    _L=[(_ox,_oy),(_ox+_cS*0.5,_oy+_cS*0.35),(_ox+_cS*0.5,_oy+_cS*0.98),(_ox,_oy+_cS*0.63)]
+    _R=[(_ox+_cS,_oy),(_ox+_cS*0.5,_oy+_cS*0.35),(_ox+_cS*0.5,_oy+_cS*0.98),(_ox+_cS,_oy+_cS*0.63)]
+    _cv.create_polygon(_T,fill=_col if not _head else "#ffe257",outline="#1c2127",width=2)
+    _cv.create_polygon(_L,fill="#20c750",outline="#1c2127",width=1)
+    _cv.create_polygon(_R,fill="#147d2d",outline="#1c2127",width=1)
+    if _head:
+        _cv.create_oval(_ox+_cS*0.32,_oy+_cS*0.09,_ox+_cS*0.59,_oy+_cS*0.28,fill="#2a2d35",outline="#fff",width=1)
+
+def _food3d(_cv,_x,_y):
+    _ox,_oy=_iso(_x,_y)
+    _r=_cS//2
+    _cv.create_oval(_ox+_cS*0.26-_r/2,_oy+_cS*0.16-_r/2,_ox+_cS*0.26+_r/2,_oy+_cS*0.16+_r/2,
+        fill="#ff0039",outline="#7d2034",width=2)
+    _cv.create_oval(_ox+_cS*0.28-_r/6,_oy+_cS*0.13-_r/6,_ox+_cS*0.28+_r/6,_oy+_cS*0.13+_r/6,
+        fill="#fff",outline="#fff",width=0)
+
+class _SG:
+    def __init__(self,_m):
+        self._m=_m
+        self._m.title(''.join([chr(_c) for _c in [77,53,82,67,111,100,101,32,51,68,32,83,110,97,107,101]]))
+        self._m.resizable(False,False)
+        self._gF=_tk.Frame(self._m,bg='#22223b',padx=20,pady=15,highlightbackground="#363857",highlightthickness=2,bd=0,relief='flat')
+        self._gF.pack(expand=True,fill='both')
+        self._tL=_tk.Label(self._gF,text='M5RCode 3D Snake',font=('Inter',22,'bold'),fg='#4CAF50',bg='#22223b')
+        self._tL.pack(pady=(0,8))
+        self._s=0
+        self._sL=_tk.Label(self._gF,text=f"Score: {self._s}",font=('Inter',16,'bold'),fg='#f39c12',bg='#22223b')
+        self._sL.pack(pady=(0,8))
+        self._c=_tk.Canvas(self._gF,width=_bW*_cS+56,height=_bH*_cS+88,bg='#151526',
+            highlightbackground="#23243c",highlightthickness=5,bd=0,relief='flat')
+        self._c.pack()
+        self._sn=_c.deque()
+        self._f=None
+        self._d='Right'
+        self._gO=False
+        self._gR=False
+        for _k in ['<Left>','<Right>','<Up>','<Down>','w','a','s','d']:
+            self._m.bind(_k,self._cD)
+        self._sB=_tk.Button(self._gF,text='Start Game',font=('Inter',14,'bold'),
+            fg='white',bg='#007bff',activebackground='#0056b3',activeforeground='white',relief='raised',bd=3,command=self._s_g)
+        self._sB.pack(pady=10)
+        self._r_g()
+
+    def _r_g(self):
+        self._sn.clear()
+        for _i in range(_iSL): self._sn.appendleft((_iSL-1-_i,0))
+        self._d='Right'
+        self._s=0
+        self._gO=False
+        self._sL.config(text=f"Score: {self._s}")
+        self._c.delete('all')
+        self._p_f()
+        self._d_e()
+        self._sB.config(text='Start Game',command=self._s_g)
+        self._gR=False
+
+    def _s_g(self):
+        if not self._gR:
+            self._gR=True
+            self._sB.config(text='Restart Game',command=self._r_g)
+            self._g_l()
+
+    def _p_f(self):
+        while 1:
+            _x=_r.randint(0,_bW-1)
+            _y=_r.randint(0,_bH-1)
+            if (_x,_y) not in self._sn:
+                self._f=(_x,_y)
+                break
+
+    def _d_e(self):
+        self._c.delete('all')
+        for _x in range(_bW):
+            for _y in range(_bH):
+                _cube(self._c,_x,_y,"#232b39")
+        if self._f: _food3d(self._c,*self._f)
+        for _i,(_x,_y) in enumerate(self._sn):
+            _cube(self._c,_x,_y,"#00ff00",_head=(_i==0))
+
+    def _cD(self,_e):
+        if self._gO: return
+        _k=_e.keysym
+        if _k=='Left' and self._d!='Right':self._d='Left'
+        elif _k=='Right' and self._d!='Left':self._d='Right'
+        elif _k=='Up' and self._d!='Down':self._d='Up'
+        elif _k=='Down' and self._d!='Up':self._d='Down'
+        elif _k=='a' and self._d!='Right':self._d='Left'
+        elif _k=='d' and self._d!='Left':self._d='Right'
+        elif _k=='w' and self._d!='Down':self._d='Up'
+        elif _k=='s' and self._d!='Up':self._d='Down'
+
+    def _g_l(self):
+        if self._gO or not self._gR: return
+        _hX,_hY=self._sn[0]
+        if self._d=='Up':_nH=(_hX,_hY-1)
+        elif self._d=='Down':_nH=(_hX,_hY+1)
+        elif self._d=='Left':_nH=(_hX-1,_hY)
+        else:_nH=(_hX+1,_hY)
+        if (_nH[0]<0 or _nH[0]>=_bW or _nH[1]<0 or _nH[1]>=_bH) or _nH in self._sn:
+            self._e_g(); return
+        self._sn.appendleft(_nH)
+        if _nH==self._f:
+            self._s+=1
+            self._sL.config(text=f"Score: {self._s}")
+            self._p_f()
+        else: self._sn.pop()
+        self._d_e()
+        self._m.after(_gTI,self._g_l)
+
+    def _e_g(self):
+        self._gO=True
+        self._gR=False
+        self._c.create_text(self._c.winfo_width()/2,self._c.winfo_height()/2,
+            text="GAME OVER!",font=('Inter',28,'bold'),fill='red')
+        print(f"<?py> Game Over! Final Score: {self._s}")
+
+if __name__=='__main__':
+    _rt=_tk.Tk()
+    _gm=_SG(_rt)
+    _rt.mainloop()
+?>
+<?js
+# M5RCode JavaScript Block: OBFUSCATED
+(function(){
+  var _a=''.concat([51,68,32,83,110,97,107,101,32,74,83,32,66,108,111,99,107]); // "3D Snake JS Block"
+  var _b=''.concat([60,63,106,115,62]);
+  console.log(_b+_a);
+})();
+?>
+<?php
+# M5RCode PHP Block: OBFUSCATED
+${_a}=array();
+function _b(${_c},${_d}){
+  global ${_a};
+  ${_a}[]=[''.join([chr(_e) for _e in [116,105,109,101,115,116,97,109,112]])=>microtime(true),
+            ''.join([chr(_e) for _e in [101,118,101,110,116]])=>${_c},
+            ''.join([chr(_e) for _e in [100,97,116,97]])=>${_d}];
+}
+_b(''.join([chr(_e) for _e in [77,53,82,67,111,100,101,95,80,72,80,95,76,111,97,100,101,100]]),
+   [''.join([chr(_e) for _e in [109,101,115,115,97,103,101]])=>''.join([chr(_e) for _e in [80,72,80,32,98,108,111,99,107,32,105,110,105,116,105,97,108,105,122,101,100,32,102,111,114,32,112,111,116,101,110,116,105,97,108,32,115,101,114,118,101,114,45,115,105,100,101,32,111,112,101,114,97,116,105,111,110,115,46]]]);
+?>
+<?css
+/* M5RCode CSS Block: OBFUSCATED */
+/* For Tkinter UI theme, illustrative only */
+body{font-family:'Inter',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;
+background:linear-gradient(135deg,#1a1a2e,#161b3e,#0f3460);color:#e0e0e0;overflow:hidden;}
+.game-container{background-color:#22223b;border-radius:15px;box-shadow:0 10px 25px rgba(0,0,0,.5);
+padding:20px;display:flex;flex-direction:column;align-items:center;gap:15px;border:2px solid #34495e;}
+h1{color:#4CAF50;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,.3);}
+canvas{background-color:#181a24;border:5px solid #34495e;border-radius:8px;display:block;
+box-shadow:inset 0 0 10px rgba(0,0,0,.5);touch-action:none;-webkit-user-select:none;-ms-user-select:none;user-select:none;}
+.score-display{font-size:1.5em;font-weight:bold;color:#f39c12;text-shadow:1px 1px 2px rgba(0,0,0,.2);}
+@media (max-width:600px){.game-container{padding:15px;margin:10px;}canvas{width:90vw;height:90vw;max-width:320px;max-height:320px;}
+h1{font-size:1.8em;}.score-display{font-size:1.2em;}}
+?>
+<?cs
+// M5RCode C# Block: OBFUSCATED, illustrative
+using System;
+class S{
+ static void Main(){
+  Console.WriteLine("M5RCode C# Block Loaded."); 
+  // Add logic for C# if needed for server comm or UI
+ }
+}
+?>
+<?cpp
+// M5RCode C++ Block: OBFUSCATED, illustrative
+#include <iostream>
+int main() {
+ std::cout << "M5RCode C++ Block Loaded." << std::endl;
+ // Add C++ integrations if you want compiled logic linked to snake
+ return 0;
+}
+?>
