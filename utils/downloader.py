@@ -19,7 +19,7 @@ class GitHubDownloader:
             'Accept': 'application/vnd.github.v3+json'
         })
         self.repo_owner = "m4rcel-lol"
-        self.repo_name = "m5rcode"
+        self.repo_name = "m5rcode-ubuntu"
         self.files_folder = "files"
         self.base_api_url = f"https://api.github.com/repos/{self.repo_owner}/{self.repo_name}"
         
