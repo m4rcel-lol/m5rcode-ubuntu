@@ -2,7 +2,7 @@
 
 ![Polyglot](https://img.shields.io/badge/language-Python%2FJS%2FPHP%2FC%23%2FC++-purple.svg)
 ![Status](https://img.shields.io/badge/status-experimental-orange.svg)
-![Ubuntu](https://cdn.desmosgraph.xyz/Operating_System_Ubuntu.svg)
+![Ubuntu](https://cdn.desmosgraph.xyz/svgs/Operating_System_Ubuntu.svg)
 ## 🤔 What even is m5rcode?
 
 **m5rcode** is an experimental **polyglot programming language** written with a blend of **Python, JavaScript, PHP, C#, and C++**.  
